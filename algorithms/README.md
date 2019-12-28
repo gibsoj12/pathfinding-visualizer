@@ -1,0 +1,1 @@
+This is a simple path finding visualizer written in Python.
