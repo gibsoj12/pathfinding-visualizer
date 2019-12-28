@@ -111,8 +111,8 @@ def main():
     path = astar(maze, start, end)
     print(np.matrix(maze))
     solution_maze = maze
-    for row_num, value in enumerate(maze):
-        for column_num, value in enumerate(maze[row_num]):
+    for row_num in range(len(maze)):
+        for column_num in range(len(maze[row_num])):
             if (row_num,column_num) in path:
                 solution_maze[row_num][column_num] = 1
             else:
