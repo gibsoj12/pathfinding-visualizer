@@ -1,6 +1,8 @@
+import numpy as np
+
 class Node:
 
-    def __init__(self, parent = None, position = None)
+    def __init__(self, parent = None, position = None):
         self.parent = parent
         self.position = position
 
@@ -17,7 +19,7 @@ class Node:
     def set_h(self, val):
         self.h = val
 
-    def set_f(self, val)
+    def set_f(self, val):
         self.f = val
 
 def astar(maze, start, end):
@@ -56,3 +58,67 @@ def astar(maze, start, end):
                 path.append(current.position)
                 current = current.parent
             return path[::-1]
+
+        children = []
+
+        for new_position in [(0,-1), (0,1), (-1,0), (1,0), (-1,-1), (-1,1), (1,-1), (1,1)]:
+
+            node_pos = (current_node.position[0] + new_position[0], current_node.position[1] + new_position[1])
+
+            if node_pos[0] > (len(maze) - 1) or node_pos[0] < 0 or node_pos[1] > (len(maze[len(maze) - 1]) - 1) or node_pos[1] < 0:
+                continue
+
+            if maze[node_pos[0]][node_pos[1]] != 0:
+                continue
+
+            new_node = Node(current_node, node_pos)
+
+            children.append(new_node)
+
+        for child in children:
+
+            for closed_child in closed_list:
+                if child == closed_child:
+                    continue
+
+            child.set_g(current_node.g + 1)
+            child.set_h((child.position[0] - end_node.position[0]) ** 2 + ((child.position[1] - end_node.position[1]) ** 2))
+            child.set_f(child.g + child.h)
+
+            for open_node in open_list:
+                if child == open_node and child.g > open_node.g:
+                    continue
+
+            open_list.append(child)
+
+
+def main():
+
+    maze = [[0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+
+    start = (0, 0)
+    end = (7, 6)
+
+    path = astar(maze, start, end)
+    print(np.matrix(maze))
+    solution_maze = maze
+    for row_num, value in enumerate(maze):
+        for column_num, value in enumerate(maze[row_num]):
+            if (row_num,column_num) in path:
+                solution_maze[row_num][column_num] = 1
+            else:
+                solution_maze[row_num][column_num] = 0
+    print(np.matrix(solution_maze))
+
+
+if __name__ == '__main__':
+    main()           
