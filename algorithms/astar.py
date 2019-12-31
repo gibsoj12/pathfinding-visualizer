@@ -40,6 +40,7 @@ def astar(maze, start, end):
     open_list.append(start_node)
 
     while len(open_list) > 0:
+        print (closed_list)
         current_node = open_list[0]
         current_index = 0
 
@@ -109,7 +110,7 @@ def main():
     end = (7, 6)
 
     path = astar(maze, start, end)
-    print(np.matrix(maze))
+    #print(np.matrix(maze))
     solution_maze = maze
     for row_num in range(len(maze)):
         for column_num in range(len(maze[row_num])):
@@ -117,7 +118,7 @@ def main():
                 solution_maze[row_num][column_num] = 1
             else:
                 solution_maze[row_num][column_num] = 0
-    print(np.matrix(solution_maze))
+    #print(np.matrix(solution_maze))
 
 
 if __name__ == '__main__':
