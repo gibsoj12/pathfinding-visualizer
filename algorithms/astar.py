@@ -13,6 +13,9 @@ class Node:
     def __eq__(self, other):
         return (self.position == other.position)
 
+    def __str__(self):
+        return str(self.position)
+
     def set_g(self, val):
         self.g = val
     
@@ -40,7 +43,6 @@ def astar(maze, start, end):
     open_list.append(start_node)
 
     while len(open_list) > 0:
-        print (closed_list)
         current_node = open_list[0]
         current_index = 0
 
@@ -51,11 +53,17 @@ def astar(maze, start, end):
         
         open_list.pop(current_index)
         closed_list.append(current_node)
+        
 
         if current_node == end_node:
             path = []
+            solution = [[0 for x in range(len(maze[numrows]))] for numrows in range(len(maze))]
+            print (np.matrix(solution))
             current = current_node
             while current is not None:
+                print(current.position)
+                solution[current.position[0]][current.position[1]] = 1 #Should find a better way of representing so that the dead nodes dont have the same appearance
+                print(np.matrix(solution)) #rough way of showing the path that we take, currently starts at end node
                 path.append(current.position)
                 current = current.parent
             return path[::-1]
