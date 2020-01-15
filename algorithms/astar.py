@@ -117,7 +117,7 @@ def main():
     start = (0, 0)
     end = (7, 6)
 
-    path = astar(maze, start, end)
+    path = astar(maze, end, start)
     #print(np.matrix(maze))
     solution_maze = maze
     for row_num in range(len(maze)):
