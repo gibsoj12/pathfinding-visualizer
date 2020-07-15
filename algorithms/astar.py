@@ -26,7 +26,15 @@ class Node:
     def set_f(self, val):
         self.f = val
 
-def astar(maze, start, end):
+def update_window(col, row, window):
+    frame = tk.Frame(master=window, relief=tk.RAISED, borderwidth= 2).grid(column = col, row = row)
+    button = tk.Button(master=frame, bg="red").grid(column = col, row = row)
+
+def updater(col, row, window): #Gotta figure out how to update
+    update_window(col, row, window)
+    window.after(1000, updater(col, row, window))
+
+def astar(maze, start, end, window):
 
     start_node = Node(None, start)
     start_node.set_g(0)
@@ -59,12 +67,11 @@ def astar(maze, start, end):
         if current_node == end_node:
             path = []
             solution = [[0 for x in range(len(maze[numrows]))] for numrows in range(len(maze))]
-            print (np.matrix(solution))
             current = current_node
             while current is not None:
-                print(current.position)
-                solution[current.position[0]][current.position[1]] = 1 #Should find a better way of representing so that the dead nodes dont have the same appearance
-                print(np.matrix(solution)) #rough way of showing the path that we take, currently starts at end node
+                update_window(current.position[1], current.position[0], window)
+                #updater(current.position[1], current.position[0], window)
+                solution[current.position[0]][current.position[1]] = 1
                 path.append(current.position)
                 current = current.parent
             return path[::-1]
@@ -115,20 +122,28 @@ def main():
             [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
 
+    window = tk.Tk()
+
     start = (0, 0)
     end = (7, 6)
 
-    path = astar(maze, end, start)
-    #print(np.matrix(maze))
-    solution_maze = maze
+
     for row_num in range(len(maze)):
         for column_num in range(len(maze[row_num])):
-            if (row_num,column_num) in path:
-                solution_maze[row_num][column_num] = 1
+            if (row_num == start[0] and column_num == start[1]) or (row_num == end[0] and column_num == end[1]):
+                frame = tk.Frame(master=window, relief=tk.RAISED, borderwidth= 2).grid(column = column_num, row = row_num)
+                button = tk.Button(master=frame, bg="red").grid(column = column_num, row = row_num)
+            elif maze[row_num][column_num] == 0:
+                frame = tk.Frame(master=window, relief=tk.RAISED, borderwidth= 2).grid(column = column_num, row = row_num)
+                button = tk.Button(master=frame, bg="black").grid(column = column_num, row = row_num)
             else:
-                solution_maze[row_num][column_num] = 0
-    #print(np.matrix(solution_maze))
+                frame = tk.Frame(master=window, relief=tk.RAISED, borderwidth= 2).grid(column = column_num, row = row_num)
+                button = tk.Button(master=frame, bg="white").grid(column = column_num, row = row_num)
 
+
+    path = astar(maze, end, start, window)
+
+    window.mainloop()    
 
 if __name__ == '__main__':
     main()           
