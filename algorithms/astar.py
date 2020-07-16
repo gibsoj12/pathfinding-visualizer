@@ -140,6 +140,19 @@ def main():
                 frame = tk.Frame(master=window, relief=tk.RAISED, borderwidth= 2).grid(column = column_num, row = row_num)
                 button = tk.Button(master=frame, bg="white").grid(column = column_num, row = row_num)
 
+    frame = tk.Frame(master=window, relief=tk.FLAT, borderwidth = 2).grid(column = column_num+1, row = 0)
+    label = tk.Label(master = frame, text = "Path").grid(column = column_num+1, row = 0)
+    frame1 = tk.Frame(master=window, width=50, height = 20, bg="red").grid(column = column_num+2, row = 0)
+
+    frame2 = tk.Frame(master=window, relief=tk.FLAT, borderwidth = 2).grid(column = column_num+1, row = 1)
+    label1 = tk.Label(master = frame, text = "Unused").grid(column = column_num+1, row = 1)
+    frame3 = tk.Frame(master=window, width=50, height = 20, bg="black").grid(column = column_num+2, row = 1)
+
+    frame4 = tk.Frame(master=window, relief=tk.FLAT, borderwidth = 2).grid(column = column_num+1, row = 2)
+    label2 = tk.Label(master = frame, text = "Barrier").grid(column = column_num+1, row = 2)
+    frame5 = tk.Frame(master=window, width=50, height = 20, bg="white").grid(column = column_num+2, row = 2)
+    
+
 
     path = astar(maze, end, start, window)
 
