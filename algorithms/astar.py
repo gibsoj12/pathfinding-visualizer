@@ -34,6 +34,24 @@ def updater(col, row, window): #Gotta figure out how to update
     update_window(col, row, window)
     window.after(1000, updater(col, row, window))
 
+'''
+def get_initial():
+
+    prompt = tk.Tk()
+
+    begin_text = tk.Label(master = prompt, text = "Please enter the beginning position (x,y)").grid(column = 0, row = 0)
+    begin_entry = tk.Entry(prompt).grid(column = 1, row = 0)
+
+    ending = tk.Label(master=prompt, text = "Please enter the final position (x,y)").grid(column = 0, row = 1)
+    end_entry = tk.Entry(prompt).grid(column = 1, row = 1)
+
+    tk.Button(master=prompt, text="Cancel", command=prompt.quit).grid(row = 3, column = 0, pady = 4)
+    tk.Button(master=prompt, text="Enter", command =take_input).grid(row = 3, column = 1, pady = 4)
+
+    def take_input():
+
+'''
+
 def astar(maze, start, end, window):
 
     start_node = Node(None, start)
@@ -122,8 +140,12 @@ def main():
             [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
 
-    window = tk.Tk()
 
+    #maze = np.zeros((20,20))
+
+    #initial = get_initial()
+
+    window = tk.Tk()
     start = (0, 0)
     end = (7, 6)
 
@@ -156,7 +178,7 @@ def main():
 
     path = astar(maze, end, start, window)
 
-    window.mainloop()    
+    window.mainloop()
 
 if __name__ == '__main__':
     main()           
